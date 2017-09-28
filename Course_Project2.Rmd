@@ -1,0 +1,125 @@
+---
+title: "Analysis of Control Signal and Wheel Speed of Permobil C500"
+author: "Charles"
+date: "September 22, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r envir, echo=FALSE, message=FALSE, warning=FALSE}
+setwd("C:/Study/Coursera/1 Data-Science/2 RStudio/9 Class 9/Coursera_DataScience_Class9_DataProduct")
+library(plotly)
+library(dplyr)
+```
+
+## Introduction
+
+Electric Wheelchair Permobil C500 uses two signals to control the speed of two wheels, thus control the movement
+of the wheelchair.
+These two signals are "Forward/Backward" (as "FB") and Right/Left (as "RL").
+The range for both signals is from 4.5 V to 7.5 V.
+In order to estimate the movement of wheelchair for research experiment purpose, we need to know the relationship
+between these two signals and the wheel speed (rpm).
+
+We use 0.5 V as a interval to change these two signals from 4.5 V to 7.5 V separately, and measure the speed of wheel three times per combination to get the data.
+Then fit a linear regression model to get the coefficients.
+So we can set these two signals to estimate the path trajectory of the wheelchair.
+
+## Data Set
+
+The column "FB" and "RL" are the input signal Forward/Backward" and "Right/Left".
+The column "RWSpeed" and "LWSpeed" are the speed of right wheel and left wheel in rpm.
+Data set looks like this:
+
+```{r dataset, cache=TRUE, echo=FALSE}
+data <- read.csv("Experiment_Data.csv", header = TRUE)
+dataWheel <- data[2:nrow(data),] %>%
+        select(1:4) %>%
+        'colnames<-'(c("FB","RL","RW","LW")) %>%
+        mutate(RWSpeed = as.numeric(as.character(RW)) * 4) %>%
+        mutate(LWSpeed = as.numeric(as.character(LW)) * 4)
+```
+```{r show data}
+head(dataWheel)
+str(dataWheel)
+```
+
+## Plot
+
+```{r fit linear model, echo=FALSE, cache=TRUE}
+fitRight <- lm(RWSpeed ~ as.numeric(as.character(FB)) + as.numeric(as.character(RL)), data = dataWheel)
+fitLeft <- lm(LWSpeed ~ as.numeric(as.character(FB)) + as.numeric(as.character(RL)), data = dataWheel)
+dataWheel2 <- mutate(dataWheel, SpeedR=predict(fitRight,dataWheel)) %>%
+                mutate(speedL=predict(fitLeft,dataWheel))
+```
+
+
+```{r plot right, echo=FALSE}
+gRight <- plot_ly(data = dataWheel2, x=~FB, y=~RWSpeed, color = ~RL,
+                  type = "scatter", mode = "lines+markers",
+                  line = list(dash="dash"),
+                  hoverinfo = 'text',
+                  text = ~paste('</br> Forward/Backward(V): ', FB,
+                                '</br> Left/Right(V): ', RL,
+                                '</br> RightWhellSpeed(rpm): ', RWSpeed)) %>%
+        add_trace(y=~SpeedR, mode = "lines", line = list(width=4, dash=""), showlegend = FALSE) %>%
+        layout(title = "Right Wheel speed with two signals",
+                xaxis = list(title = "Forward/Backward(V)"),
+                yaxis = list (title = "Right Wheel speed(rpm)"))
+gRight
+```
+
+```{r plot left, echo=FALSE}
+gLeft <- plot_ly(data = dataWheel2, x=~FB, y=~LWSpeed, color = ~RL,
+                  type = "scatter", mode = "lines+markers", line = list(dash="dash"),
+                 hoverinfo = 'text',
+                  text = ~paste('</br> Forward/Backward(V): ', FB,
+                                '</br> Left/Right(V): ', RL,
+                                '</br> RightWhellSpeed(rpm): ', LWSpeed)) %>%
+        add_trace(y=~speedL, mode = "lines", line = list(width=4, dash=""), showlegend = FALSE) %>%
+        layout(title = "Left Wheel speed with two signals",
+                xaxis = list(title = "Forward/Backward(V)"),
+                yaxis = list (title = "Left Wheel speed(rpm)"))
+gLeft
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

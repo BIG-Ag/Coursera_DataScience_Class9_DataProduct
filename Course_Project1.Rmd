@@ -1,0 +1,70 @@
+---
+title: "My favorite Chinese restaurants in LA"
+author: "Charles"
+date: "September 20, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r code, echo=FALSE, message=FALSE}
+library(leaflet)
+chnRestMap <- data.frame(name = c("Chong Qing Special Noodles",
+                                  "Szechuan Impression",
+                                  "Tasty Garden Restaurant",
+                                  "101 Noodle Express",
+                                  "Blackball",
+                                  "Chengdu Taste",
+                                  "Half & Half Tea House MP",
+                                  "MaMa Lu's Dumpling House",
+                                  "Elite Restaurant",
+                                  "Liang's Kitchen",
+                                  "Jiouding Hot Pot",
+                                  "Lao Sze Chuan"),
+                         lat = c(34.103302,
+                                 34.076859,
+                                 34.077989,
+                                 34.078805,
+                                 34.079277,
+                                 34.079995,
+                                 34.063663,
+                                 34.062745,
+                                 34.053675,
+                                 34.052429,
+                                 34.051904,
+                                 34.147087),
+                         lng = c(-118.091836,
+                                 -118.144757,
+                                 -118.124901,
+                                 -118.109591,
+                                 -118.103708,
+                                 -118.082519,
+                                 -118.134557,
+                                 -118.121667,
+                                 -118.135503,
+                                 -118.136388,
+                                 -118.090359,
+                                 -118.254455))
+restSites <- c(
+        "<a href= 'https://www.yelp.com/biz/%E9%87%8D%E5%BA%86%E5%B0%8F%E9%9D%A2-best-noodle-house-rosemead?osq=chongqing+noodle'>Chongqing Special Noodles</a>",
+        "<a href= 'https://www.yelp.com/biz/szechuan-impression-alhambra-3'>Szechuan Impression</a>",
+        "<a href= 'https://www.yelp.com/biz/tasty-garden-alhambra'>Szechuan Impression</a>",
+        "<a href= 'https://www.yelp.com/biz/101-noodle-express-alhambra'>101 Noodle Express</a>",
+        "<a href= 'https://www.yelp.com/biz/blackball-taiwanese-dessert-san-gabriel-2'>Blackball</a>",
+        "<a href= 'https://www.yelp.com/biz/chengdu-taste-rosemead-5'>Chengdu Taste</a>",
+        "<a href= 'https://www.yelp.com/biz/half-and-half-tea-express-monterey-park-monterey-park'>Half & Half Tea House MP</a>",
+        "<a href= 'https://www.yelp.com/biz/mamas-lu-dumpling-house-monterey-park-4'>MaMa Lu's Dumpling House</a>",
+        "<a href= 'https://www.yelp.com/biz/elite-restaurant-monterey-park'>Elite Restaurant</a>",
+        "<a href= 'https://www.yelp.com/biz/liangs-kitchen-monterey-park'>Liang's Kitchen</a>",
+        "<a href= 'https://www.yelp.com/biz/jiouding-hot-pot-rosemead'>Jiouding Hot Pot</a>",
+        "<a href= 'https://www.yelp.com/biz/lao-sze-chuan-glendale-4'>Lao Sze Chuan</a>"
+)
+chnRestMap %>%
+        leaflet() %>%
+        addTiles() %>%
+        addMarkers(popup = restSites,
+                   clusterOptions = markerClusterOptions())
+```

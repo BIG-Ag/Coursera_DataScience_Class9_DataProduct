@@ -1,0 +1,12 @@
+name: permobil_c500_electrical_wheelchair_wheel_speed_estimation
+title: Permobil C500 Electrical Wheelchair Wheel Speed Estimation
+username:
+account: charlesd
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 218755
+bundleId: 997347
+url: https://charlesd.shinyapps.io/permobil_c500_electrical_wheelchair_wheel_speed_estimation/
+when: 1506404833.29914
+asMultiple: FALSE
+asStatic: FALSE

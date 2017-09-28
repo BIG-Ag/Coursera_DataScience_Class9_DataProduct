@@ -1,0 +1,14 @@
+- Class: meta
+  Course: My First Course
+  Lesson: lesson2
+  Author: your name goes here
+  Type: Standard
+  Organization: your organization's name goes here
+  Version: 2.4.3
+
+- Class: mult_question
+  Output: ask the multiple choice question here
+  AnswerChoices: ANS;2;3
+  CorrectAnswer: ANS
+  AnswerTests: omnitest(correctVal= 'ANS')
+  Hint: hint

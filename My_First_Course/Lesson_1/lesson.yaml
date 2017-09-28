@@ -1,0 +1,19 @@
+- Class: meta
+  Course: My First Course
+  Lesson: Lesson 1
+  Author: your name goes here
+  Type: Standard
+  Organization: your organization's name goes here
+  Version: 2.4.3
+
+- Class: cmd_question
+  Output: explain what the user must do here
+  CorrectAnswer: EXPR or VAL
+  AnswerTests: omnitest(correctExpr='EXPR', correctVal=VAL)
+  Hint: hint
+
+- Class: text_question
+  Output: explain the question here
+  CorrectAnswer: answer
+  AnswerTests: omnitest(correctVal='answer')
+  Hint: hint
